@@ -10,3 +10,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp
+
+// <footer className={styles.footer}>
+//   <p>© {new Date().getFullYear()} Ankita</p>
+// </footer>

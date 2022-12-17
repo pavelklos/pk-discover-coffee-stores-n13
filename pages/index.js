@@ -15,10 +15,6 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>Coffee Connoisseur</h1>
       </main>
-
-      <footer className={styles.footer}>
-        <p>© {new Date().getFullYear()} Ankita</p>
-      </footer>
     </div>
   )
 }
