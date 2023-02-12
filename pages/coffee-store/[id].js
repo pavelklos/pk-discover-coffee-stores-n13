@@ -10,6 +10,10 @@ const CoffeeStore = () => {
         <a>Back to home</a>
       </Link>
       <br />
+      <Link href='/coffee-store/dynamic' legacyBehavior>
+        <a>Go to page dynamic</a>
+      </Link>
+      <br />
       <Link href='https://www.google.com/'>Google.com</Link>
       <hr />
       Coffee Store Page <b>{router.query.id}</b>
