@@ -7,6 +7,7 @@ import Card from '../components/card'
 
 import coffeeStoresData from '../data/coffee-stores.json'
 
+// SERVER-SIDE
 export async function getStaticProps(context) {
   console.log('hi getStaticProps')
   return {
@@ -16,6 +17,7 @@ export async function getStaticProps(context) {
   }
 }
 
+// CLIENT-SIDE
 export default function Home(props) {
   console.log('props', props)
 
