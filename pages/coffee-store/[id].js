@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Head from 'next/head'
 
 import coffeeStoresData from '../../data/coffee-stores.json'
 
@@ -18,12 +19,17 @@ export async function getStaticProps(staticProps) {
 
 // SERVER-SIDE
 export function getStaticPaths() {
+  const paths = coffeeStoresData.map((coffeeStore) => {
+    return {
+      //  { params: { id: '0' } }
+      params: {
+        id: coffeeStore.id.toString(),
+      },
+    }
+  })
   return {
-    paths: [
-      { params: { id: '0' } },
-      { params: { id: '1' } },
-      // { params: { id: '300' } },
-    ],
+    // paths: [{ params: { id: '0' } }, { params: { id: '1' } }],
+    paths,
     fallback: true,
     // [fallback: boolean] Does route exist in getStaticPaths? [YES/NO]
     // - [false] YES -> pre-render, NO -> 404
@@ -41,36 +47,38 @@ const CoffeeStore = (props) => {
     return <div>Loading...</div>
   }
 
+  const { id, name, address, neighbourhood, websiteUrl, imgUrl } =
+    props.coffeeStore
+
   console.log('props', props)
   return (
     <div>
+      <Head>
+        <title>{name}</title>
+      </Head>
       <Link href='/' legacyBehavior>
         <a>Back to home</a>
-      </Link>
-      <br />
-      <Link href='/coffee-store/dynamic' legacyBehavior>
-        <a>Go to page dynamic</a>
       </Link>
       <hr />
       Coffee Store Page (query.id: <b>{router.query.id}</b>)
       <hr />
       <p>
-        id: <b>{props.coffeeStore.id}</b>
+        id: <b>{id}</b>
       </p>
       <p>
-        name: <b>{props.coffeeStore.name}</b>
+        name: <b>{name}</b>
       </p>
       <p>
-        address: <b>{props.coffeeStore.address}</b>
+        address: <b>{address}</b>
       </p>
       <p>
-        neighbourhood: <b>{props.coffeeStore.neighbourhood}</b>
+        neighbourhood: <b>{neighbourhood}</b>
       </p>
       <p>
-        websiteUrl: <b>{props.coffeeStore.websiteUrl}</b>
+        websiteUrl: <b>{websiteUrl}</b>
       </p>
       <p>
-        imgUrl: <b>{props.coffeeStore.imgUrl}</b>
+        imgUrl: <b>{imgUrl}</b>
       </p>
     </div>
   )
