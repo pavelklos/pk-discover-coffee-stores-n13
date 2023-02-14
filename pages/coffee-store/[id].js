@@ -22,9 +22,13 @@ export function getStaticPaths() {
     paths: [
       { params: { id: '0' } },
       { params: { id: '1' } },
-      { params: { id: '300' } },
+      // { params: { id: '300' } },
     ],
-    fallback: false, // true, false -> 404,
+    fallback: true,
+    // [fallback: boolean] Does route exist in getStaticPaths? [YES/NO]
+    // - [false] YES -> pre-render, NO -> 404
+    // - [true] YES -> pre-render, NO -> download (loading) & pre-render OR error
+    //   - check router.isFallback before render
   }
 }
 
@@ -32,6 +36,11 @@ export function getStaticPaths() {
 const CoffeeStore = (props) => {
   const router = useRouter()
   console.log('router', router)
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   console.log('props', props)
   return (
     <div>
