@@ -19,7 +19,7 @@ export async function getStaticProps(context) {
 
 // CLIENT-SIDE
 export default function Home(props) {
-  console.log('props', props)
+  // console.log('props', props)
 
   const handleOnBannerBtnClick = () => {
     console.log('hi banner button')
