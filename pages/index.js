@@ -17,16 +17,19 @@ export async function getStaticProps(context) {
     method: 'GET',
     headers: {
       Accept: 'application/json',
-      Authorization: '<Add your Foursquare API token here>',
+      // Authorization: '<Add your Foursquare API token here>',
+      Authorization: process.env.FOURSQUARE_API_KEY,
     },
   }
+  // console.log('FOURSQUARE_API_KEY:', process.env.FOURSQUARE_API_KEY)
   const response = await fetch(
     'https://api.foursquare.com/v3/places/search?query=coffee&ll=50.13530804882977%2C14.100613497437408&limit=6',
     options
   )
   const data = await response.json()
-  console.log('[API : Foursquare - Place Search]')
-  console.log(data.results)
+  // console.log('[API : Foursquare - Place Search]')
+  // console.log(data.results)
+  console.log(`coffee stores: ${data.results.length}`)
   // .catch((err) => console.error(err));
   // fetch(
   //   'https://api.foursquare.com/v3/places/search?query=coffee&ll=50.13530804882977%2C14.100613497437408&limit=6',
@@ -50,7 +53,7 @@ export async function getStaticProps(context) {
 
 // CLIENT-SIDE
 export default function Home(props) {
-  console.log('props', props)
+  // console.log('props', props)
 
   const handleOnBannerBtnClick = () => {
     console.log('hi banner button')
