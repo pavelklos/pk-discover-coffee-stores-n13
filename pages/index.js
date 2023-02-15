@@ -9,7 +9,29 @@ import coffeeStoresData from '../data/coffee-stores.json'
 
 // SERVER-SIDE
 export async function getStaticProps(context) {
-  console.log('hi getStaticProps')
+  // console.log('hi getStaticProps')
+
+  // Foursquare : Place Search *************************************************
+  // https://location.foursquare.com/developer/reference/place-search
+  const options = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      Authorization: '<add your foursquare token here>',
+    },
+  }
+  fetch(
+    'https://api.foursquare.com/v3/places/search?query=coffee&ll=50.13530804882977%2C14.100613497437408&limit=6',
+    options
+  )
+    .then((response) => response.json())
+    .then((response) => {
+      console.log('[API : Foursquare - Place Search]')
+      console.log(response)
+    })
+    .catch((err) => console.error(err))
+  // Foursquare : Place Search *************************************************
+
   return {
     props: {
       coffeeStores: coffeeStoresData,
