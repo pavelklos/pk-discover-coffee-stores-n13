@@ -17,31 +17,40 @@ export async function getStaticProps(context) {
     method: 'GET',
     headers: {
       Accept: 'application/json',
-      Authorization: '<add your foursquare token here>',
+      Authorization: '<Add your Foursquare API token here>',
     },
   }
-  fetch(
+  const response = await fetch(
     'https://api.foursquare.com/v3/places/search?query=coffee&ll=50.13530804882977%2C14.100613497437408&limit=6',
     options
   )
-    .then((response) => response.json())
-    .then((response) => {
-      console.log('[API : Foursquare - Place Search]')
-      console.log(response)
-    })
-    .catch((err) => console.error(err))
+  const data = await response.json()
+  console.log('[API : Foursquare - Place Search]')
+  console.log(data.results)
+  // .catch((err) => console.error(err));
+  // fetch(
+  //   'https://api.foursquare.com/v3/places/search?query=coffee&ll=50.13530804882977%2C14.100613497437408&limit=6',
+  //   options
+  // )
+  //   .then((response) => response.json())
+  //   .then((response) => {
+  //     console.log('[API : Foursquare - Place Search]')
+  //     console.log(response)
+  //   })
+  //   .catch((err) => console.error(err))
   // Foursquare : Place Search *************************************************
 
   return {
     props: {
-      coffeeStores: coffeeStoresData,
+      // coffeeStores: coffeeStoresData,
+      coffeeStores: data.results,
     }, // will be passed to the page component as props
   }
 }
 
 // CLIENT-SIDE
 export default function Home(props) {
-  // console.log('props', props)
+  console.log('props', props)
 
   const handleOnBannerBtnClick = () => {
     console.log('hi banner button')
@@ -69,12 +78,22 @@ export default function Home(props) {
               {props.coffeeStores.map((coffeeStore) => {
                 return (
                   <Card
-                    key={coffeeStore.id}
+                    key={coffeeStore.fsq_id}
                     name={coffeeStore.name}
-                    imgUrl={coffeeStore.imgUrl}
-                    href={`/coffee-store/${coffeeStore.id}`}
+                    imgUrl={
+                      coffeeStore.imgUrl ||
+                      'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'
+                    }
+                    href={`/coffee-store/${coffeeStore.fsq_id}`}
                     className={styles.card}
                   />
+                  // <Card
+                  //   key={coffeeStore.id}
+                  //   name={coffeeStore.name}
+                  //   imgUrl={coffeeStore.imgUrl}
+                  //   href={`/coffee-store/${coffeeStore.id}`}
+                  //   className={styles.card}
+                  // />
                 )
               })}
             </div>
