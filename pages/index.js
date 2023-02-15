@@ -6,47 +6,20 @@ import Banner from '../components/banner'
 import Card from '../components/card'
 
 import coffeeStoresData from '../data/coffee-stores.json'
+import { fetchCoffeeStores } from '../lib/coffee-stores'
 
 // SERVER-SIDE
 export async function getStaticProps(context) {
   // console.log('hi getStaticProps')
 
-  // Foursquare : Place Search *************************************************
-  // https://location.foursquare.com/developer/reference/place-search
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      // Authorization: '<Add your Foursquare API token here>',
-      Authorization: process.env.FOURSQUARE_API_KEY,
-    },
-  }
-  // console.log('FOURSQUARE_API_KEY:', process.env.FOURSQUARE_API_KEY)
-  const response = await fetch(
-    'https://api.foursquare.com/v3/places/search?query=coffee&ll=50.13530804882977%2C14.100613497437408&limit=6',
-    options
-  )
-  const data = await response.json()
-  // console.log('[API : Foursquare - Place Search]')
-  // console.log(data.results)
-  console.log(`coffee stores: ${data.results.length}`)
-  // .catch((err) => console.error(err));
-  // fetch(
-  //   'https://api.foursquare.com/v3/places/search?query=coffee&ll=50.13530804882977%2C14.100613497437408&limit=6',
-  //   options
-  // )
-  //   .then((response) => response.json())
-  //   .then((response) => {
-  //     console.log('[API : Foursquare - Place Search]')
-  //     console.log(response)
-  //   })
-  //   .catch((err) => console.error(err))
-  // Foursquare : Place Search *************************************************
+  const coffeeStores = await fetchCoffeeStores()
+  console.log(`coffee stores: ${coffeeStores.length}`)
 
   return {
     props: {
       // coffeeStores: coffeeStoresData,
-      coffeeStores: data.results,
+      // coffeeStores: data.results,
+      coffeeStores,
     }, // will be passed to the page component as props
   }
 }
