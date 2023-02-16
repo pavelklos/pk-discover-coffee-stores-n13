@@ -80,7 +80,9 @@ export default function Home(props) {
         {coffeeStores.length > 0 && (
           <div className={styles.sectionWrapper}>
             <h2 className={styles.heading2}>
-              Stores near me <small>{latLong}</small>
+              Stores near me <small>[{coffeeStores.length}]</small>
+              <br />
+              <small style={{ fontSize: '0.75em' }}>location: {latLong}</small>
             </h2>
             <div className={styles.cardLayout}>
               {coffeeStores.map((coffeeStore) => {
