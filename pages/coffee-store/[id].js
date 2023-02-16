@@ -11,10 +11,10 @@ import styles from '../../styles/coffee-store.module.css'
 
 import { fetchCoffeeStores } from '../../lib/coffee-stores'
 
-// SERVER-SIDE
 export async function getStaticProps(staticProps) {
   const params = staticProps.params
-  // console.log('params', params)
+  console.log('params', params)
+
   const coffeeStores = await fetchCoffeeStores()
   return {
     props: {
@@ -25,7 +25,6 @@ export async function getStaticProps(staticProps) {
   }
 }
 
-// SERVER-SIDE
 export async function getStaticPaths() {
   const coffeeStores = await fetchCoffeeStores()
   const paths = coffeeStores.map((coffeeStore) => {
@@ -36,32 +35,19 @@ export async function getStaticPaths() {
     }
   })
   return {
-    // paths: [{ params: { id: '0' } }, { params: { id: '1' } }],
     paths,
     fallback: true,
-    // [fallback: boolean] Does route exist in getStaticPaths? [YES/NO]
-    // - [false] YES -> pre-render, NO -> 404
-    // - [true] YES -> pre-render, NO -> download (loading) & pre-render OR error
-    //   - check router.isFallback before render
   }
 }
 
-// CLIENT-SIDE
 const CoffeeStore = (props) => {
-  console.log('props', props)
-
   const router = useRouter()
-  // console.log('router', router)
-
   if (router.isFallback) {
     return <div>Loading...</div>
   }
-
   const { name, address, neighbourhood, imgUrl } = props.coffeeStore
 
-  const handleUpvoteButton = () => {
-    console.log('handle upvote')
-  }
+  const handleUpvoteButton = () => {}
 
   return (
     <div className={styles.layout}>
@@ -71,7 +57,7 @@ const CoffeeStore = (props) => {
       <div className={styles.container}>
         <div className={styles.col1}>
           <div className={styles.backToHomeLink}>
-            <Link href='/' legacyBehavior>
+            <Link href='/'>
               <a>Back to home</a>
             </Link>
           </div>
@@ -118,28 +104,3 @@ const CoffeeStore = (props) => {
 }
 
 export default CoffeeStore
-
-// import { useRouter } from 'next/router'
-// import Link from 'next/link'
-
-// const CoffeeStore = () => {
-//   const router = useRouter()
-//   console.log('router', router)
-//   return (
-//     <div>
-//       <Link href='/' legacyBehavior scroll={true}>
-//         <a>Back to home</a>
-//       </Link>
-//       <br />
-//       <Link href='/coffee-store/dynamic' legacyBehavior>
-//         <a>Go to page dynamic</a>
-//       </Link>
-//       <br />
-//       <Link href='https://www.google.com/'>Google.com</Link>
-//       <hr />
-//       Coffee Store Page <b>{router.query.id}</b>
-//     </div>
-//   )
-// }
-
-// export default CoffeeStore
