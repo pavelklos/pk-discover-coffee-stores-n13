@@ -2,13 +2,10 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
-
 import cls from 'classnames'
 
-import coffeeStoresData from '../../data/coffee-stores.json'
-
+// import coffeeStoresData from '../../data/coffee-stores.json'
 import styles from '../../styles/coffee-store.module.css'
-
 import { fetchCoffeeStores } from '../../lib/coffee-stores'
 
 export async function getStaticProps(staticProps) {
