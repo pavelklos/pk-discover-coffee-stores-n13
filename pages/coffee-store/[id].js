@@ -14,8 +14,9 @@ import { StoreContext } from '../../store/store-context'
 import { isEmpty } from '../../utils'
 
 export async function getStaticProps(staticProps) {
+  console.log('[SSG] : [id].js : getStaticProps()')
   const params = staticProps.params
-  console.log('params', params)
+  // console.log('params', params)
 
   const coffeeStores = await fetchCoffeeStores()
   const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
@@ -30,6 +31,7 @@ export async function getStaticProps(staticProps) {
 }
 
 export async function getStaticPaths() {
+  console.log('[SSG] : [id].js : getStaticPaths()')
   const coffeeStores = await fetchCoffeeStores()
   const paths = coffeeStores.map((coffeeStore) => {
     return {
@@ -60,6 +62,9 @@ const CoffeeStore = (initialProps) => {
   } = useContext(StoreContext)
 
   useEffect(() => {
+    console.log('[CSR] : [id].js : useEffect()', { id })
+    console.log('[CSR] : [id].js : useEffect()', { initialProps })
+    console.log('[CSR] : [id].js : useEffect()', { coffeeStores })
     if (isEmpty(initialProps.coffeeStore)) {
       if (coffeeStores.length > 0) {
         const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
@@ -74,7 +79,7 @@ const CoffeeStore = (initialProps) => {
 
   const handleUpvoteButton = () => {}
 
-  console.log({ coffeeStore })
+  // console.log({ coffeeStore })
 
   return (
     <div className={styles.layout}>

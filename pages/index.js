@@ -12,7 +12,7 @@ import useTrackLocation from '../hooks/use-track-location'
 import { ACTION_TYPES, StoreContext } from '../store/store-context'
 
 export async function getStaticProps(context) {
-  console.log('hi getStaticProps')
+  console.log('[SSG] : index.js : getStaticProps()')
 
   const coffeeStores = await fetchCoffeeStores()
 
@@ -24,7 +24,7 @@ export async function getStaticProps(context) {
 }
 
 export default function Home(props) {
-  console.log('props', props)
+  // console.log('props', props)
 
   const { handleTrackLocation, locationErrorMsg, isFindingLocation } =
     useTrackLocation()
@@ -33,18 +33,21 @@ export default function Home(props) {
   const [coffeeStoresError, setCoffeeStoresError] = useState(null)
 
   const { dispatch, state } = useContext(StoreContext)
-  console.log('REDUCER:', state)
+  // console.log('REDUCER:', state)
 
   const { coffeeStores, latLong } = state
 
-  console.log({ latLong, locationErrorMsg })
+  // console.log({ latLong, locationErrorMsg })
 
   useEffect(() => {
+    console.log('[CSR] : index.js : useEffect()', { latLong })
     async function setCoffeeStoresByLocation() {
       if (latLong) {
         try {
           const fetchedCoffeeStores = await fetchCoffeeStores(latLong, 30)
-          console.log({ fetchedCoffeeStores })
+          console.log('[CSR] : index.js : useEffect()', {
+            fetchedCoffeeStores,
+          })
           // setCoffeeStores(fetchedCoffeeStores)
           dispatch({
             type: ACTION_TYPES.SET_COFFEE_STORES,
@@ -55,7 +58,7 @@ export default function Home(props) {
           //set coffee stores
         } catch (error) {
           //set error
-          console.log({ error })
+          // console.log({ error })
           setCoffeeStoresError(error.message)
         }
       }
@@ -64,7 +67,7 @@ export default function Home(props) {
   }, [latLong])
 
   const handleOnBannerBtnClick = () => {
-    console.log('hi banner button')
+    // console.log('hi banner button')
     handleTrackLocation()
   }
   return (
