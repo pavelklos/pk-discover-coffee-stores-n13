@@ -6,20 +6,20 @@ const table = base('coffee-stores')
 // console.log({ table })
 
 const createCoffeeStore = async (req, res) => {
-  console.log({ req })
+  console.log('[API-GET] : createCoffeeStore.js')
+  // console.log({ req })
 
   if (req.method === 'POST') {
     //find a record
-
     try {
       const findCoffeeStoreRecords = await table
         .select({
-          // filterByFormula: `id="59f784dd28122f14f9d5d63d"`,
-          filterByFormula: `id="5532adea498ef7e2678e5b09"`,
+          // filterByFormula: `id="5532adea498ef7e2678e5b09"`,
+          filterByFormula: `id="999"`,
         })
         .firstPage()
 
-      console.log({ findCoffeeStoreRecords })
+      // console.log({ findCoffeeStoreRecords })
 
       if (findCoffeeStoreRecords.length !== 0) {
         const records = findCoffeeStoreRecords.map((record) => {
@@ -30,8 +30,26 @@ const createCoffeeStore = async (req, res) => {
         res.json(records)
       } else {
         //create a record
+        const createRecords = await table.create([
+          {
+            fields: {
+              id: '999',
+              name: 'My favourite Coffee Store',
+              address: 'my address',
+              neighbourhood: 'some neighbourhood',
+              voting: 200,
+              imgUrl: 'http://myimage.com',
+            },
+          },
+        ])
+
+        const records = createRecords.map((record) => {
+          return {
+            ...record.fields,
+          }
+        })
         res.status(201)
-        res.json({ message: 'create a record' })
+        res.json(records)
       }
     } catch (err) {
       console.error('Error finding store', err)
