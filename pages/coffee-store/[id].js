@@ -92,16 +92,20 @@ const CoffeeStore = (initialProps) => {
     console.log('[CSR] : [id].js : useEffect()', { coffeeStores })
     if (isEmpty(initialProps.coffeeStore)) {
       if (coffeeStores.length > 0) {
+        // CSR
         const coffeeStoreFromContext = coffeeStores.find((coffeeStore) => {
           return coffeeStore.id.toString() === id //dynamic id
         })
-        // if (coffeeStoreFromContext) {
-        setCoffeeStore(coffeeStoreFromContext)
-        handleCreateCoffeeStore(coffeeStoreFromContext)
-        // }
+        if (coffeeStoreFromContext) {
+          setCoffeeStore(coffeeStoreFromContext)
+          handleCreateCoffeeStore(coffeeStoreFromContext)
+        }
       }
+    } else {
+      // SSG
+      handleCreateCoffeeStore(initialProps.coffeeStore)
     }
-  }, [id])
+  }, [id, initialProps, initialProps.coffeeStore])
 
   const { name, address, neighbourhood, imgUrl } = coffeeStore
 
