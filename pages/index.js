@@ -69,7 +69,7 @@ export default function Home(props) {
           //set coffee stores
         } catch (error) {
           //set error
-          // console.log({ error })
+          console.error({ error })
           setCoffeeStoresError(error.message)
         }
       }
