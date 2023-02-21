@@ -75,7 +75,7 @@ export default function Home(props) {
       }
     }
     setCoffeeStoresByLocation()
-  }, [latLong])
+  }, [dispatch, latLong])
 
   const handleOnBannerBtnClick = () => {
     // console.log('hi banner button')
@@ -99,7 +99,12 @@ export default function Home(props) {
         {coffeeStoresError && <p>Something went wrong: {coffeeStoresError}</p>}
 
         <div className={styles.heroImage}>
-          <Image src='/static/hero-image.png' width={700} height={400} />
+          <Image
+            src='/static/hero-image.png'
+            width={700}
+            height={400}
+            alt='hero image'
+          />
         </div>
 
         {coffeeStores.length > 0 && (
