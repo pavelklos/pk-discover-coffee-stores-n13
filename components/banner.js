@@ -4,6 +4,7 @@ const Banner = (props) => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
+        <small className={styles.title2}>PK </small>
         <span className={styles.title1}>Coffee</span>
         <span className={styles.title2}>Connoisseur</span>
       </h1>
